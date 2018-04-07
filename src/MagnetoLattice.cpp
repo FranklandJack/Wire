@@ -51,7 +51,7 @@ double MagnetoLattice::nextValueJacobi(int i, int j) const
 {
 	return (((*this)(i+1,j) + (*this)(i-1,j)
 		         + (*this)(i,j+1) + (*this)(i,j-1)
-		          + (pow(m_dx,2)/m_permativity) * getChargeDensity(i,j))/4.0);
+		          + (std::pow(m_dx,2)/m_permativity) * getChargeDensity(i,j))/4.0);
 
 }
 
@@ -67,7 +67,7 @@ double jacobiUpdate(MagnetoLattice &currentLattice, MagnetoLattice &updatedLatti
 		{
 				updatedLattice(i,j) = currentLattice.nextValueJacobi(i,j);
 
-				convergenceMeasure += abs(updatedLattice(i,j)-currentLattice(i,j));
+				convergenceMeasure += std::abs(updatedLattice(i,j)-currentLattice(i,j));
 				std::cout << convergenceMeasure << '\n';
 
 		}
@@ -95,7 +95,7 @@ double gaussSeidelUpdate(MagnetoLattice &lattice)
 
 				currentValue = lattice(i,j);
 
-				convergenceMeasure += abs(updatedValue-currentValue);
+				convergenceMeasure += std::abs(updatedValue-currentValue);
 
 				lattice(i,j) = updatedValue;
 
@@ -134,7 +134,7 @@ double sorUpdate(double sorParameter, MagnetoLattice &lattice)
 
 				lattice(i,j) = updatedSORValue;
 
-				convergenceMeasure += abs(updatedSORValue-currentValue);
+				convergenceMeasure += std::abs(updatedSORValue-currentValue);
 
 
 		}
@@ -176,7 +176,7 @@ std::ostream& operator<<(std::ostream &out, const MagnetoLattice &lattice)
 				// Calculate distance of current point from centre of lattice.
 				double xDistance = xCentre - i;
 				double yDistance = yCentre - j;
-				double radialDistance = sqrt(xDistance*xDistance+yDistance*yDistance);
+				double radialDistance = std::sqrt(xDistance*xDistance+yDistance*yDistance);
 
 				double fieldStrength;
 
@@ -193,7 +193,7 @@ std::ostream& operator<<(std::ostream &out, const MagnetoLattice &lattice)
 					magneticFieldTemp = lattice.magneticField(i,j);
 				}
 
-				fieldStrength = sqrt(magneticFieldTemp[0]*magneticFieldTemp[0]+magneticFieldTemp[1]*magneticFieldTemp[1]);
+				fieldStrength = std::sqrt(magneticFieldTemp[0]*magneticFieldTemp[0]+magneticFieldTemp[1]*magneticFieldTemp[1]);
 
 				out << i << ' ' << j << ' ' <<
 				radialDistance << ' ' << lattice(i,j) <<
