@@ -180,7 +180,9 @@ std::ostream& operator<<(std::ostream &out, const MagnetoLattice &lattice)
 				double fieldStrength;
 
 
-
+				// Make sure we aren't calculating field at edge of lattice since this will try and access
+				// memory the program doesn't own via the indexing during the calculation - field is just
+				// set to zero at these points.
 				if(i==0 || j==0 || i==lattice.m_xRange-1 || j==lattice.m_yRange-1)
 				{
 					magneticFieldTemp = std::array<double,2>{0,0};
