@@ -68,6 +68,7 @@ double jacobiUpdate(MagnetoLattice &currentLattice, MagnetoLattice &updatedLatti
 				updatedLattice(i,j) = currentLattice.nextValueJacobi(i,j);
 
 				convergenceMeasure += abs(updatedLattice(i,j)-currentLattice(i,j));
+				std::cout << convergenceMeasure << '\n';
 
 		}
 	}
